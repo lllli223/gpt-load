@@ -72,6 +72,7 @@ interface GroupFormData {
   test_model: string;
   validation_endpoint: string;
   param_overrides: string;
+  param_renames: string;
   model_redirect_rules: string;
   model_redirect_strict: boolean;
   config: Record<string, number | string | boolean>;
@@ -97,6 +98,7 @@ const formData = reactive<GroupFormData>({
   test_model: "",
   validation_endpoint: "",
   param_overrides: "",
+  param_renames: "",
   model_redirect_rules: "",
   model_redirect_strict: false,
   config: {},
@@ -292,6 +294,7 @@ function resetForm() {
     test_model: isCreateMode ? testModelPlaceholder.value : "",
     validation_endpoint: "",
     param_overrides: "",
+    param_renames: "",
     model_redirect_rules: "",
     model_redirect_strict: false,
     config: {},
@@ -334,6 +337,7 @@ function loadGroupData() {
     test_model: props.group.test_model || "",
     validation_endpoint: props.group.validation_endpoint || "",
     param_overrides: JSON.stringify(props.group.param_overrides || {}, null, 2),
+    param_renames: JSON.stringify(props.group.param_renames || {}, null, 2),
     model_redirect_rules: JSON.stringify(props.group.model_redirect_rules || {}, null, 2),
     model_redirect_strict: props.group.model_redirect_strict || false,
     config: {},
@@ -474,6 +478,18 @@ async function handleSubmit() {
       }
     }
 
+    // 验证参数重命名 JSON 格式
+    let paramRenames = {} as Record<string, string>;
+    if (formData.param_renames) {
+      try {
+        const parsed = JSON.parse(formData.param_renames);
+        paramRenames = parsed;
+      } catch {
+        message.error(t("keys.invalidJsonFormat"));
+        return;
+      }
+    }
+
     // 验证模型重定向规则 JSON 格式
     let modelRedirectRules = {};
     if (formData.model_redirect_rules) {
@@ -522,6 +538,7 @@ async function handleSubmit() {
       test_model: formData.test_model,
       validation_endpoint: formData.validation_endpoint,
       param_overrides: paramOverrides,
+      param_renames: paramRenames,
       model_redirect_rules: modelRedirectRules,
       model_redirect_strict: formData.model_redirect_strict,
       config,
@@ -1154,6 +1171,28 @@ async function handleSubmit() {
                     v-model:value="formData.param_overrides"
                     type="textarea"
                     placeholder='{"temperature": 0.7}'
+                    :rows="4"
+                  />
+                </n-form-item>
+              </div>
+
+              <div class="config-section">
+                <n-form-item path="param_renames">
+                  <template #label>
+                    <div class="form-label-with-tooltip">
+                      {{ t("keys.paramRenames") }}
+                      <n-tooltip trigger="hover" placement="top">
+                        <template #trigger>
+                          <n-icon :component="HelpCircleOutline" class="help-icon config-help" />
+                        </template>
+                        {{ t("keys.paramRenamesTooltip") }}
+                      </n-tooltip>
+                    </div>
+                  </template>
+                  <n-input
+                    v-model:value="formData.param_renames"
+                    type="textarea"
+                    placeholder='{"max_tokens": "max_completion_tokens"}'
                     :rows="4"
                   />
                 </n-form-item>

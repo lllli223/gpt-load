@@ -354,6 +354,9 @@ export default {
     addHeader: "ヘッダー追加",
     paramOverridesTooltip:
       "JSON形式を使用して、上書きするAPIリクエストパラメータを定義します。これらのパラメータは、リクエスト送信時に元のパラメータにマージされます。",
+    paramRenames: "パラメータ名のリネーム",
+    paramRenamesTooltip:
+      'JSONでパラメータ名の置換ルールを定義します。リクエストに指定のキーが含まれる場合、新しいキー名に置き換えます。例: {"max_tokens": "max_completion_tokens"}',
     modelRedirectPolicy: "未設定モデルポリシー",
     modelRedirectPolicyTooltip:
       "リダイレクトルールで設定されていないモデルのリクエストをどう処理するか選択",

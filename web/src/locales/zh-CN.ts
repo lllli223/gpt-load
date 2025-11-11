@@ -342,6 +342,9 @@ export default {
     addHeader: "添加请求头",
     paramOverridesTooltip:
       "使用JSON格式定义要覆盖的API请求参数。这些参数会在发送请求时合并到原始参数中",
+    paramRenames: "参数名重写",
+    paramRenamesTooltip:
+      '使用JSON格式定义要重命名的参数键。当请求包含指定键时，将其键名重写为新的键名。例如：{"max_tokens": "max_completion_tokens"}',
     modelRedirectPolicy: "未配置模型策略",
     modelRedirectPolicyTooltip: "选择如何处理未在重定向规则中配置的模型请求",
     modelRedirectStrictMode: "严格模式：拒绝未配置的模型请求（返回404）",

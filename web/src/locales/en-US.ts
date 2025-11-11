@@ -355,6 +355,9 @@ export default {
     addHeader: "Add Header",
     paramOverridesTooltip:
       "Define the API request parameters to be overridden using JSON format. These parameters will be merged with the original parameters when sending the request.",
+    paramRenames: "Parameter Renames",
+    paramRenamesTooltip:
+      'Define parameter key renaming in JSON. If the request contains the specified key, it will be renamed to the new key. Example: {"max_tokens": "max_completion_tokens"}',
     modelRedirectPolicy: "Unconfigured Model Policy",
     modelRedirectPolicyTooltip:
       "Choose how to handle requests for models not configured in redirect rules",
